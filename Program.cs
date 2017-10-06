@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Pong.NET
 {
@@ -18,6 +16,7 @@ namespace Pong.NET
             while (true)
             {
                 Console.WriteLine(Draw());
+                GetUserInput();
                 System.Threading.Thread.Sleep(10);
             }
         }
@@ -71,6 +70,31 @@ namespace Pong.NET
             }
 
             return displayString;
+        }
+
+        static void GetUserInput()
+        {
+            // Exit the method if we're not pressing anything
+            if (Console.KeyAvailable == false)
+            {
+                return;
+            }
+
+            // Store the user input and check if they're moving up or down
+            var input = Console.ReadKey().Key;
+
+            if (input == ConsoleKey.W && !displayArray[2, player1Pos[1] - 1])
+            {
+                player1Pos[0]--;
+                player1Pos[1]--;
+            }
+
+            if (input == ConsoleKey.S && !displayArray[2, player1Pos[0] + 1])
+            {
+                player1Pos[0]++;
+                player1Pos[1]++;
+            }
+            return;
         }
     }
 }
