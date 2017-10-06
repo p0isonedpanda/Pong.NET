@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Pong.NET
 {
@@ -8,6 +9,9 @@ namespace Pong.NET
         static int width = 22;
         static int height = 12;
         static bool[,] displayArray = new bool[width, height];
+
+        static int[] player1Pos = new int[] {(int)Math.Floor((float)height / 2), (int)Math.Floor((float)height / 2) - 1};
+        static int[] player2Pos = new int[] {(int)Math.Floor((float)height / 2), (int)Math.Floor((float)height / 2) - 1};
 
         static void Main(string[] args)
         {
@@ -42,6 +46,12 @@ namespace Pong.NET
                     }
                 }
             }
+
+            // Add the players to the array
+            displayArray[2, player1Pos[0]] = true;
+            displayArray[2, player1Pos[1]] = true;
+            displayArray[width - 3, player2Pos[0]] = true;
+            displayArray[width - 3, player2Pos[1]] = true;
             
             // Create the string that will be printed to the console
             for (int iheight = 0; iheight < height; iheight++)
