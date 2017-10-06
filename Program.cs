@@ -14,12 +14,15 @@ namespace Pong.NET
             while (true)
             {
                 Console.WriteLine(Draw());
+                System.Threading.Thread.Sleep(10);
             }
         }
 
         static string Draw()
         {
             string displayString = "";
+
+            Console.Clear();
             
             // Create the blank play area in an array
             for (int iwidth = 0; iwidth < width; iwidth++)
