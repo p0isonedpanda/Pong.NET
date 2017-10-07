@@ -11,13 +11,17 @@ namespace Pong.NET
         static int[] player1Pos = new int[] {(int)Math.Floor((float)height / 2), (int)Math.Floor((float)height / 2) - 1};
         static int[] player2Pos = new int[] {(int)Math.Floor((float)height / 2), (int)Math.Floor((float)height / 2) - 1};
 
+        static int[] ballPos = new int[] {3, player1Pos[1]};
+        static bool ballDown = false;
+        static bool ballLeft = false;
+
         static void Main(string[] args)
         {
             while (true)
             {
-                Console.WriteLine(Draw());
                 GetUserInput();
-                System.Threading.Thread.Sleep(10);
+                Console.WriteLine(Draw());
+                System.Threading.Thread.Sleep(200);
             }
         }
 
@@ -51,6 +55,47 @@ namespace Pong.NET
             displayArray[2, player1Pos[1]] = true;
             displayArray[width - 3, player2Pos[0]] = true;
             displayArray[width - 3, player2Pos[1]] = true;
+
+            // Calculate ball position
+            if (displayArray[ballPos[0], ballPos[1] - 1])
+            {
+                ballDown = true;
+            }
+
+            if (displayArray[ballPos[0], ballPos[1] + 1])
+            {
+                ballDown = false;
+            }
+
+            if (displayArray[ballPos[0] - 1, ballPos[1]])
+            {
+                ballLeft = true;
+            }
+
+            if (displayArray[ballPos[0] + 1, ballPos[1]])
+            {
+                ballLeft = false;
+            }
+
+            if (ballDown)
+            {
+                ballPos[1]++;
+            }
+            else
+            {
+                ballPos[1]--;
+            }
+
+            if (ballLeft)
+            {
+                ballPos[0]++;
+            }
+            else
+            {
+                ballPos[0]--;
+            }
+
+            displayArray[ballPos[0], ballPos[1]] = true;
             
             // Create the string that will be printed to the console
             for (int iheight = 0; iheight < height; iheight++)
