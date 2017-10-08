@@ -16,12 +16,20 @@ namespace Pong.NET
         static int[] ballPos = new int[] {3, player1Pos[1]};
         static bool ballDown = false;
         static bool ballLeft = false;
+        static bool aiDelay = true;
 
         static void Main(string[] args)
         {
             while (true)
             {
                 GetUserInput();
+                if (!aiDelay)
+                {
+                    AIBehaviour();
+                    aiDelay = true;
+                }
+                else
+                    aiDelay = false;
                 Console.WriteLine(Draw());
                 System.Threading.Thread.Sleep(200);
             }
@@ -178,6 +186,20 @@ namespace Pong.NET
             ballPos = new int[] {3, player1Pos[1]};
             ballDown = false;
             ballLeft = true;
+        }
+
+        static void AIBehaviour()
+        {
+            if (ballPos[1] < player2Pos[1])
+            {
+                player2Pos[0]--;
+                player2Pos[1]--;
+            }
+            else if (ballPos[0] > player2Pos[0])
+            {
+                player2Pos[0]++;
+                player2Pos[1]++;
+            }
         }
     }
 }
