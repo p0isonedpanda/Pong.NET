@@ -10,6 +10,8 @@ namespace Pong.NET
 
         static int[] player1Pos = new int[] {(int)Math.Floor((float)height / 2), (int)Math.Floor((float)height / 2) - 1};
         static int[] player2Pos = new int[] {(int)Math.Floor((float)height / 2), (int)Math.Floor((float)height / 2) - 1};
+        static int player1Score = 0;
+        static int player2Score = 0; 
 
         static int[] ballPos = new int[] {3, player1Pos[1]};
         static bool ballDown = false;
@@ -69,12 +71,26 @@ namespace Pong.NET
 
             if (displayArray[ballPos[0] - 1, ballPos[1]])
             {
-                ballLeft = true;
+                if (ballPos[0] - 1 == 0)
+                {
+                    AddScore(1);
+                }
+                else
+                {
+                    ballLeft = true;
+                }
             }
 
             if (displayArray[ballPos[0] + 1, ballPos[1]])
             {
-                ballLeft = false;
+                if (ballPos[0] + 1 == displayArray.Length / height - 1)
+                {
+                    AddScore(0);
+                }
+                else
+                {
+                    ballLeft = false;
+                }
             }
 
             if (ballDown)
@@ -114,6 +130,8 @@ namespace Pong.NET
                 displayString += "\n";
             }
 
+            displayString += "Player 1: " + player1Score + "\nPlayer 2: " + player2Score;
+
             return displayString;
         }
 
@@ -140,6 +158,26 @@ namespace Pong.NET
                 player1Pos[1]++;
             }
             return;
+        }
+
+        static void AddScore(int playerIndex)
+        {
+            // Add a point to the correct player
+            if (playerIndex == 0)
+            {
+                player1Score++;
+            }
+            else
+            {
+                player2Score++;
+            }
+
+            // Reset all positions
+            player1Pos = new int[] {(int)Math.Floor((float)height / 2), (int)Math.Floor((float)height / 2) - 1};
+            player2Pos = new int[] {(int)Math.Floor((float)height / 2), (int)Math.Floor((float)height / 2) - 1};
+            ballPos = new int[] {3, player1Pos[1]};
+            ballDown = false;
+            ballLeft = true;
         }
     }
 }
